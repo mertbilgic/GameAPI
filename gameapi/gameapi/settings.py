@@ -37,7 +37,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
+    'rest_framework_simplejwt',
+    'rest_framework.authtoken',
+    'core'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'core.auth_backend.AuthenticationWithoutPassword',
+)
+
+AUTH_USER_MODEL = "core.MyUser"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
