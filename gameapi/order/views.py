@@ -24,7 +24,8 @@ class OrderSummaryView(APIView):
 class CartView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, pk):
+    def post(self, request):
+        pk = request.data.get('item_id', '')
 
         item = get_object_or_404(Product, pk=pk)
         order = Order.objects.filter(user=request.user, ordered=False).first()
@@ -55,7 +56,7 @@ class CheckoutView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        order = Order.objects.get(user=request.user, ordered=False)
+        order = get_object_or_404(Order,user=request.user, ordered=False)
         order.ordered = True
         order.save()
         serializer = CheckoutSerializer(order)
