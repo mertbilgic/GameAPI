@@ -15,3 +15,14 @@ class OrderSummarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('pk','username', 'items', 'ordered','ordered_date')
+
+
+class CheckoutSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(many=True)
+    email = serializers.CharField(source='user.email')
+    class Meta:
+        model = Order
+        fields = ('pk','email', 'items', 'ordered','ordered_date')
+    
+    def get_message(self, obj):
+        return 'Success checkout order'

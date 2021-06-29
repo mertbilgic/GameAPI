@@ -6,15 +6,17 @@ from django.shortcuts import get_object_or_404, redirect
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from rest_framework import status
 
 from .models import Order, OrderItem
-from .serializers import OrderSummarySerializer
+from .serializers import OrderSummarySerializer, CheckoutSerializer
 from product.models import Product
+
 
 class OrderSummaryView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self,request):
+    def get(self, request):
         queryset = Order.objects.get(user=request.user, ordered=False)
         serializer = OrderSummarySerializer(queryset)
         return Response(serializer.data)
@@ -47,3 +49,16 @@ class CartView(APIView):
             order.items.add(order_item)
 
         return redirect("order_summary")
+
+
+class CheckoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        order = Order.objects.get(user=request.user, ordered=False)
+        order.ordered = True
+        order.save()
+        serializer = CheckoutSerializer(order)
+        response = {'message': 'Success checkout order'}
+        response.update(serializer.data)
+        return Response(response,status=status.HTTP_200_OK)
