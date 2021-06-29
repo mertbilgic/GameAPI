@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 from .models import Order, OrderItem
-from .serializers import OrderSummarySerializer, CheckoutSerializer
+from .serializers import OrderSummarySerializer, CheckoutSerializer, OrderHistorySerializer
 from product.models import Product
 
 
@@ -62,3 +62,9 @@ class CheckoutView(APIView):
         response = {'message': 'Success checkout order'}
         response.update(serializer.data)
         return Response(response,status=status.HTTP_200_OK)
+
+class OrderHistoryView(APIView):
+    def get(self,request):
+        queryset = Order.objects.all().filter(user=request.user, ordered=True)
+        serializer = OrderHistorySerializer(queryset,many=True)
+        return Response(serializer.data)
