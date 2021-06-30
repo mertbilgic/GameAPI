@@ -30,8 +30,11 @@ API'ımıza ait end-point'leri kullanabilmek için authentication işlemi yapıl
 Üç adet ön tanımlı kullanımız bulunmaktadır.
 
 User One | user1@example.com
+
 User Two | user2@example.com
+
 User Three | user3@example.com
+
 Acces ve refresh token'a erişime için aşağıdaki komutu çalıştırınız.
 ```sh
 # POST /api/token/
