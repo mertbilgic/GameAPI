@@ -59,14 +59,14 @@ curl -X GET 'http://127.0.0.1:8000/' \
 ```
 
 ##### Search
-Search işlemi büyük/küçük harf duyarlı değildir.Anahtar kelimeyi içeren sonuçları kullanıcıya döner.Bu özellik sadece oyun aramayı destekler.
+Search işlemi büyük/küçük harf duyarlı değildir.Anahtar kelimeyi içeren sonuçları kullanıcıya döner.
 Kullanıcı bir oyun aramak istediğinde aşağıdaki şekilde bir istekte bulanabilir.
 
 Örneğin bir oyunu name özelliği ile aranmak isterse search_fields=name şeklinde, aradığı keyword'ü ise search=One şeklinde belirtilmelidir.Benzeri arama işlemleri category ve year özellikleri içinde yapılabilir.
 
 ```sh
 # GET api/search
-curl -X GET 'http://127.0.0.1:8000/api/search?search=One&search_fields=name' \
+curl -X GET 'http://127.0.0.1:8000/api/v1/search?search=One&search_fields=name' \
 -H 'Authorization: Bearer **TOKEN**'
 [
   {
@@ -82,7 +82,7 @@ Listeleme özelliği sadece category özelliğini desteklemektedir.Kullanıcı b
 
 ```sh
 # GET api/list
-curl -X GET 'http://127.0.0.1:8000/api/list?category=futbol' \
+curl -X GET 'http://127.0.0.1:8000/api/v1/list?category=futbol' \
 -H 'Authorization: Bearer **TOKEN**' 
 [
     {
